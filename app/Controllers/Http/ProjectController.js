@@ -34,6 +34,22 @@ class ProjectController {
     })
   }
 
+  async update ({request, response, params: {id}}) {
+
+    const { name, description } = request.post()
+
+    const project  = request.post().project
+
+    project.description = description
+    project.name = name
+
+    await project.save()
+
+    response.status(200).json({
+      message: 'Project updated'
+    })
+  }
+
 }
 
 module.exports = ProjectController

@@ -21,6 +21,9 @@ Route.get('/projects', 'ProjectController.index')
 
 Route.post('/projects', 'ProjectController.store')
 
+Route.put('/projects/:id', 'ProjectController.update')
+      .middleware(['findProject'])
+
 //Tasks
 Route.get('/tasks', 'TaskController.index')
 
