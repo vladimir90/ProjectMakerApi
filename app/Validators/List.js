@@ -1,18 +1,16 @@
 'use strict'
-const { validateAll } = use('Validator')
 
-class Task {
+class List {
   get rules () {
     return {
       // validation rules
-      name: 'required',
-      list_id: 'required',
-      project_id: 'required'
+      name: 'required'
     }
   }
+
   async fails (errorMessages) {
     return this.ctx.response.send(errorMessages)
   }
 }
 
-module.exports = Task
+module.exports = List

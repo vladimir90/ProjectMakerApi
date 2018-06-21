@@ -5,59 +5,28 @@ const Developer = use('App/Models/Developer')
 class TaskController {
   async index({ response }) {
 
-    const tasks = await Task.query().with('developers').fetch()
+    const tasks = await Task.query().with('developers').with('list').fetch()
 
     response.status(200).json({
       data: tasks
     }) 
   }
 
-  async store ({request, response, params: {id}}) {
-    const { name, description, status = 0, priority = 0, developer } = request.post()
+  async store ({request, response}) {
+    const { name, description, list_id, project_id, priority = 0, developers} = request.post()
 
-    const project_id = id
+    const task = await Task.create({ name, description, project_id, list_id, priority})
 
-    const task = new Task()
-
-    task.fill({
-      name, 
-      description,
-      project_id,
-      status,
-      priority
-    })
-
-    //If you assign developer, then update pivot and assign developer to task
     // if (developers && developers.length > 0) {
-    //   await task.developers().attach(developers)
-    //   task.developers = await task.developers().fetch()
+      // await task.developers().attach(1)
+      // task.developers = await task.developers().fetch()
     // }
 
-    await task.save()
-    
     response.status(200).json({
       message: 'Task created'
     })
   }
   
-  async assign ({request, response, params: {id}}) {
-    const { developers } = request.post()
-
-    const task = request.post().task
-
-    console.log(task)
-    //find user
-
-    //attach to task
-
-    //If you assign developer, then update pivot and assign developer to task
-    // if (developers && developers.length > 0) {
-    //   await task.developers().attach(developers)
-    //   task.developers = await task.developers().fetch()
-    // }
-
-    return 'Assign user to task with id' + id
-  }
 
   async delete ({response, request, params: {id}}) {
 
@@ -70,15 +39,16 @@ class TaskController {
     })
   }
 
-  async update ({response, request, params: {id}}) {
+  async update ({response, request}) {
 
-    const {name, description, priority = 0, status = 0 } = request.post()
+    const {name, description, priority = 0, list_id, project_id, developers = []} = request.post()
 
     const task  = request.post().task 
 
     task.name = name
     task.description = description
-    task.status = status
+    task.list_id = list_id
+    task.project_id = project_id
     task.priority = priority
 
     await task.save()

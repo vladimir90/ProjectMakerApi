@@ -15,8 +15,7 @@
 
 const Route = use('Route')
 
-Route.on('/').render('welcome')
-
+//Projects
 Route.get('/projects', 'ProjectController.index')
 
 Route.post('/projects', 'ProjectController.store')
@@ -27,16 +26,18 @@ Route.put('/projects/:id', 'ProjectController.update')
 //Tasks
 Route.get('/tasks', 'TaskController.index')
 
-Route.post('/tasks/:id','TaskController.store')
+Route.post('/tasks','TaskController.store')
      .validator('Task')
 
 Route.delete('/tasks/:id','TaskController.delete')
       .middleware(['findTask'])
 
 Route.put('/tasks/:id','TaskController.update')
-      .middleware(['findTask']) 
+      .middleware(['findTask'])  
 
-//Assign to task user with id
-Route.put('/tasks/:id/assign', 'TaskController.assign')
-      .middleware(['findTask'])
+//Lists
+Route.get('/list', 'ListController.index')
+
+Route.post('/list', 'ListController.store')  
+      .validator('List')
 
