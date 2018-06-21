@@ -9,6 +9,9 @@ class Project extends Model {
   lists() {
     return this.hasMany('App/Models/List')
   }
+  team() {
+    return this.belongsTo('App/Models/Team')
+  }
 }
 
 module.exports = Project

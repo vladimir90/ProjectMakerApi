@@ -10,6 +10,8 @@ class DeveloperSchema extends Schema {
       table.string('username',80).notNullable().unique()
       table.string('first_name')
       table.string('last_name')
+      table.integer('project_id').foreign().references('projects.id')
+      table.integer('team_id').foreign().references('teams.id')
     })
   }
 

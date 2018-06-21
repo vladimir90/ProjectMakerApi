@@ -57,6 +57,14 @@ class TaskController {
       message: 'Task updated'
     })
   }
+
+  async projectTasks({ response, params: {id} }) {
+
+    const tasks = await Task.query().with('developers').where('project_id','=', id).fetch()
+    response.status(200).json({
+      data: tasks
+    }) 
+  }
 }
 
 module.exports = TaskController

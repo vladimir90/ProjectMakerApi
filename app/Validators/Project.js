@@ -5,7 +5,8 @@ class Project {
     return {
       // validation rules
       name: 'required',
-      description: 'required'
+      description: 'required',
+      team_id: 'required'
     }
   }
 

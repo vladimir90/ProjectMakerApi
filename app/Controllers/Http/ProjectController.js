@@ -23,7 +23,8 @@ class ProjectController {
 
     project.fill({
       name,
-      description
+      description,
+      team_id
     })
 
     await project.save()
@@ -49,7 +50,6 @@ class ProjectController {
       message: 'Project updated'
     })
   }
-
 }
 
 module.exports = ProjectController

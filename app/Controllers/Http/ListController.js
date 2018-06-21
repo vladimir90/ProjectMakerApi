@@ -29,7 +29,15 @@ class ListController {
   async update () {
   }
 
-  async destroy () {
+  async delete ({request,response}) {
+
+    const list = request.post().list
+
+    await list.delete()
+
+    response.status(200).json({
+      message: 'List deleted'
+    })
   }
 }
 

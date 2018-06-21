@@ -17,27 +17,26 @@ const Route = use('Route')
 
 //Projects
 Route.get('/projects', 'ProjectController.index')
-
-Route.post('/projects', 'ProjectController.store')
-
-Route.put('/projects/:id', 'ProjectController.update')
-      .middleware(['findProject'])
+Route.post('/projects', 'ProjectController.store').validator('Project')
+Route.put('/projects/:id', 'ProjectController.update').middleware(['findProject'])
 
 //Tasks
 Route.get('/tasks', 'TaskController.index')
-
-Route.post('/tasks','TaskController.store')
-     .validator('Task')
-
-Route.delete('/tasks/:id','TaskController.delete')
-      .middleware(['findTask'])
-
-Route.put('/tasks/:id','TaskController.update')
-      .middleware(['findTask'])  
-
+Route.get('/project/tasks/:id', 'TaskController.projectTasks') //get tasks for project with project id
+Route.post('/tasks','TaskController.store').validator('Task')
+Route.delete('/tasks/:id','TaskController.delete').middleware(['findTask'])
+Route.put('/tasks/:id','TaskController.update').middleware(['findTask'])
+ 
 //Lists
 Route.get('/list', 'ListController.index')
+Route.post('/list', 'ListController.store').validator('List')
+Route.delete('/list/:id', 'ListController.delete').middleware(['findList'])
 
-Route.post('/list', 'ListController.store')  
-      .validator('List')
+//Developers
+Route.get('/developers', 'DeveloperController.index')
+Route.put('/developers/:id', 'DeveloperController.update')   
+
+//Teams
+Route.get('/teams', 'TeamController.index')
+Route.post('/teams', 'TeamController.store')
 
