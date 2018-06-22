@@ -38,5 +38,8 @@ Route.put('/developers/:id', 'DeveloperController.update')
 
 //Teams
 Route.get('/teams', 'TeamController.index')
-Route.post('/teams', 'TeamController.store')
+Route.get('/teams/:id', 'TeamController.show').middleware(['findTeam'])
+Route.post('/teams', 'TeamController.store').validator('Team')
+Route.put('/teams/:id', 'TeamController.update').middleware(['findTeam'])
+Route.delete('/teams/:id', 'TeamController.delete').middleware(['findTeam']) //How to delete this now?
 

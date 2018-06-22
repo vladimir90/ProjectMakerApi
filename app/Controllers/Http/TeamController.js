@@ -4,7 +4,7 @@ const Team = use('App/Models/Team')
 class TeamController {
   async index ({response}) {
 
-    const teams = await Team.query().with('projects').fetch()
+    const teams = await Team.query().with('projects.tasks').fetch()
 
     response.status(200).json({
       data: teams
@@ -22,16 +22,41 @@ class TeamController {
     })
   }
 
-  async show () {
+  async show ({response, request}) {
+
+    const team  = request.post().team
+
+    response.status(200).json({
+      data: team
+    })
   }
 
   async edit () {
   }
 
   async update () {
+    const { name, description } = request.post()
+
+    const team  = request.post().team
+
+    team.description = description
+    team.name = name
+
+    await team.save()
+
+    response.status(200).json({
+      message: 'Project updated'
+    })
   }
 
-  async destroy () {
+  async delete ({request, response}) {
+    const team = request.post().team
+
+    await team.delete()
+
+    response.status(200).json({
+      message: 'Team deleted'
+    })
   }
 }
 

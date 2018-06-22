@@ -40,7 +40,8 @@ const namedMiddleware = {
   findTask: 'App/Middleware/FindTask',
   findProject: 'App/Middleware/FindProject',
   findList: 'App/Middleware/FindList',
-  findDeveloper: 'App/Middleware/FindDeveloper'
+  findDeveloper: 'App/Middleware/FindDeveloper',
+  findTeam: 'App/Middleware/FindTeam'
 }
 
 /*
