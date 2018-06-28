@@ -9,6 +9,9 @@ class Team extends Model {
   developers() {
     return this.hasMany('App/Models/Developer')
   }
+  user() {
+    return this.belongsTo('App/Models/User')
+  }
 }
 
 module.exports = Team

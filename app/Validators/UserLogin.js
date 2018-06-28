@@ -1,11 +1,10 @@
 'use strict'
 
-class Team {
+class UserLogin {
   get rules () {
     return {
-      // validation rules
-      name: 'required',
-      user_id: 'required'
+      email: 'required|email',
+      password: 'required'
     }
   }
 
@@ -14,4 +13,4 @@ class Team {
   }
 }
 
-module.exports = Team
+module.exports = UserLogin

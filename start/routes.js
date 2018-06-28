@@ -15,8 +15,16 @@
 
 const Route = use('Route')
 
+//User
+Route.get('/user-profile', 'UserController.show').middleware('auth')
+
+//Auth
+Route.post('/login', 'UserController.login').validator('UserLogin')
+Route.post('/logout', 'UserController.logout').middleware('auth')
+Route.post('/register', 'UserController.register').validator('UserStore')
+
 //Projects
-Route.get('/projects', 'ProjectController.index')
+Route.get('/projects', 'ProjectController.index').middleware('auth')
 Route.post('/projects', 'ProjectController.store').validator('Project')
 Route.put('/projects/:id', 'ProjectController.update').middleware(['findProject'])
 
