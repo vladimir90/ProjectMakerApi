@@ -9,6 +9,14 @@ class ProjectSchema extends Schema {
       table.timestamps()
       table.string('name')
       table.text('description')
+      table
+          .integer('user_id')
+          .unsigned()
+          .index('user_id')
+      table
+          .foreign('user_id')
+          .references('users.id')
+          .onDelete('cascade')
     })
   }
 

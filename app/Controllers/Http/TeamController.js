@@ -64,6 +64,7 @@ class TeamController {
     try {
       await auth.check()
       
+      let id = auth.user.id
       const { name, description } = request.post()
 
       const team  = request.post().team

@@ -3,10 +3,13 @@
 const Project = use('App/Models/Project')
 
 class ProjectController {
-  async index ({ response, request }) {
+  async index ({ response, request, auth }) {
     
+    let id = auth.user.id
+
     const projects = await Project
                     .query()
+                    .where('user_id','=', id)
                     .with('tasks')
                     .fetch()
 
@@ -15,15 +18,18 @@ class ProjectController {
     })
   }
 
-  async store ({ request, response }) {
+  async store ({ request, response, auth }) {
 
-    const { name, description } = request.post()
+    const { name, description, team_id } = request.post()
+
+    let user_id = auth.user.id
 
     const project =  new Project()
 
     project.fill({
       name,
       description,
+      user_id,
       team_id
     })
 

@@ -4,7 +4,8 @@ class List {
   get rules () {
     return {
       // validation rules
-      name: 'required'
+      name: 'required',
+      project_id: 'required'
     }
   }
 

@@ -5,9 +5,8 @@ class Task {
   get rules () {
     return {
       // validation rules
-      name: 'required',
-      list_id: 'required',
-      project_id: 'required'
+      description: 'required',
+      list_id: 'required'
     }
   }
   async fails (errorMessages) {

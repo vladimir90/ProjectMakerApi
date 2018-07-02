@@ -25,7 +25,7 @@ Route.post('/register', 'UserController.register').validator('UserStore')
 
 //Projects
 Route.get('/projects', 'ProjectController.index').middleware('auth')
-Route.post('/projects', 'ProjectController.store').validator('Project')
+Route.post('/projects', 'ProjectController.store').validator('Project').middleware('auth')
 Route.put('/projects/:id', 'ProjectController.update').middleware(['findProject'])
 
 //Tasks
@@ -37,6 +37,7 @@ Route.put('/tasks/:id','TaskController.update').middleware(['findTask'])
  
 //Lists
 Route.get('/list', 'ListController.index')
+Route.get('/project/list/:id', 'ListController.projectList').middleware('auth') //get list for project with project id
 Route.post('/list', 'ListController.store').validator('List')
 Route.delete('/list/:id', 'ListController.delete').middleware(['findList'])
 
@@ -48,6 +49,6 @@ Route.put('/developers/:id', 'DeveloperController.update')
 Route.get('/teams', 'TeamController.index')
 Route.get('/teams/:id', 'TeamController.show').middleware(['findTeam'])
 Route.post('/teams', 'TeamController.store').validator('Team')
-Route.put('/teams/:id', 'TeamController.update').middleware(['findTeam'])
+// Route.put('/teams/:id', 'TeamController.update').middleware(['findTeam']) --Need to fix this, u cant update foreign teams
 Route.delete('/teams/:id', 'TeamController.delete').middleware(['findTeam']) //How to delete this now?
 

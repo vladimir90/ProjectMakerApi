@@ -12,6 +12,9 @@ class Project extends Model {
   team() {
     return this.belongsTo('App/Models/Team')
   }
+  user() {
+    return this.belongsTo('App/Models/User')
+  }
 }
 
 module.exports = Project

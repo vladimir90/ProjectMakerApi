@@ -9,6 +9,14 @@ class ListSchema extends Schema {
       table.timestamps()
       table.string('name')
       table.integer('status')
+      table
+        .integer('project_id')
+        .unsigned()
+        .index('project_id')
+      table
+        .foreign('project_id')
+        .references('projects.id')
+        .onDelete('cascade')
     })
   }
 

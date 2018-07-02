@@ -5,13 +5,12 @@ class Project {
     return {
       // validation rules
       name: 'required',
-      description: 'required',
       team_id: 'required'
     }
   }
 
   async fails (errorMessages) {
-    return this.ctx.response.send(errorMessages)
+    return this.ctx.response.status(400).send(errorMessages)
   }
 }
 

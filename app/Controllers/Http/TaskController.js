@@ -13,9 +13,9 @@ class TaskController {
   }
 
   async store ({request, response}) {
-    const { name, description, list_id, project_id, priority = 0, developers} = request.post()
+    const { name, description, list_id, priority = 0, developers} = request.post()
 
-    const task = await Task.create({ name, description, project_id, list_id, priority})
+    const task = await Task.create({ name, description, list_id, priority})
 
     // if (developers && developers.length > 0) {
       // await task.developers().attach(1)
