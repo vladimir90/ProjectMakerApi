@@ -35,7 +35,21 @@ class ListController {
   async edit () {
   }
 
-  async update () {
+  async update ({request, response}) {
+
+    const {name, status, project_id} = request.post()
+
+    const list  = request.post().list
+
+    list.project_id = project_id
+    list.status = status
+    list.name = name
+
+    await list.save()
+
+    response.status(200).json({
+      message: 'List updated'
+    })
   }
 
   async delete ({request,response}) {

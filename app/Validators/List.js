@@ -10,7 +10,7 @@ class List {
   }
 
   async fails (errorMessages) {
-    return this.ctx.response.send(errorMessages)
+    return this.ctx.response.status(400).send(errorMessages)
   }
 }
 
