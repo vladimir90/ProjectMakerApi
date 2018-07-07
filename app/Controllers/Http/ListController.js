@@ -1,5 +1,6 @@
 'use strict'
 const List = use('App/Models/List')
+const Task = use('App/Models/Task')
 class ListController {
   async index ({response}) {
     const list = await List.query().with('tasks').fetch()
@@ -22,7 +23,21 @@ class ListController {
 
   async projectList ({ request, response, params: {id}}) {
 
-    const list = await List.query().with('tasks').where('project_id','=', id).fetch()
+    const {tasks = false, archived = false} = request.get()
+
+    const query = List.query().where('project_id','=',id)
+
+    if (tasks === 'true') {
+      query.with('tasks')
+    }
+
+    if (archived === 'true') {
+      query.where('archived',true)
+    } else {
+      query.where('archived', false || null)
+    }
+
+    const list = await query.fetch()
     
     response.status(200).json({
       data: list
@@ -37,9 +52,15 @@ class ListController {
 
   async update ({request, response}) {
 
-    const {name, status, project_id} = request.post()
+    const {name, status, project_id, archived = false} = request.post()
 
     const list  = request.post().list
+
+    //If list is archived, archive all task in that list
+    if (archived) {
+      await Task.query().where('list_id','=',list.id).update({ archived })
+      list.archived = archived
+    }
 
     list.project_id = project_id
     list.status = status

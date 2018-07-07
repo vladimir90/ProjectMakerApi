@@ -38,7 +38,7 @@ Route.put('/tasks/:id','TaskController.update').middleware(['findTask'])
 //Lists
 Route.get('/list', 'ListController.index')
 Route.get('/project/list/:id', 'ListController.projectList').middleware('auth') //get list for project with project id
-Route.put('/list/:id', 'ListController.update').validator('List').middleware(['findList'])
+Route.put('/list/:id', 'ListController.update').middleware(['findList'])
 Route.post('/list', 'ListController.store').validator('List')
 Route.delete('/list/:id', 'ListController.delete').middleware(['findList'])
 
