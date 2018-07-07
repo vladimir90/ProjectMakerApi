@@ -3,9 +3,25 @@ const Task = use('App/Models/Task')
 const Developer = use('App/Models/Developer')
 
 class TaskController {
-  async index({ response }) {
+  async index({request, response }) {
 
-    const tasks = await Task.query().with('developers').with('list').fetch()
+    const {developers, list, archived} = request.get()
+
+    const query = Task.query()
+
+    if (developers === 'true') {
+      query.with('developers')
+    }
+    if (list === 'true') {
+      query.with('list')
+    }
+    if (archived === 'true') {
+      query.where('archived', true)
+    } else {
+      query.where('archived', false || null)
+    }
+
+    const tasks = await query.fetch()
 
     response.status(200).json({
       data: tasks
@@ -41,15 +57,20 @@ class TaskController {
 
   async update ({response, request}) {
 
-    const {name, description, priority = 0, list_id, project_id, developers = []} = request.post()
+    const {name, description, priority = 0, list_id, project_id, developers = [],archived = false, sort = []} = request.post()
 
     const task  = request.post().task 
+
+    if (sort.length > 0) {
+      this.sortTasks(sort)
+    }
 
     task.name = name
     task.description = description
     task.list_id = list_id
     task.project_id = project_id
     task.priority = priority
+    task.archived = archived
 
     await task.save()
 
@@ -57,7 +78,13 @@ class TaskController {
       message: 'Task updated'
     })
   }
-
+  async sortTasks(ids) {
+    for (var i = 0; i<ids.length;i++) {
+      let id = ids[i]
+      let sortIndex = i + 1
+      await Task.query().where('id','=',id).update({ sort: sortIndex })
+    }
+  }
   async projectTasks({ response, params: {id} }) {
 
     const tasks = await Task.query().with('developers').where('project_id','=', id).fetch()
