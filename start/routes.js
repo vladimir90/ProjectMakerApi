@@ -25,6 +25,7 @@ Route.post('/register', 'UserController.register').validator('UserStore')
 
 //Projects
 Route.get('/projects', 'ProjectController.index').middleware('auth')
+Route.get('/projects/:id', 'ProjectController.show').middleware('auth').middleware(['findProject'])
 Route.post('/projects', 'ProjectController.store').validator('Project').middleware('auth')
 Route.put('/projects/:id', 'ProjectController.update').middleware(['findProject'])
 

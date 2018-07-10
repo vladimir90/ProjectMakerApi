@@ -52,10 +52,13 @@ class ListController {
 
   async update ({request, response}) {
 
-    const {name, status, project_id, archived = false} = request.post()
+    const {name, status, project_id, archived = false, sort = []} = request.post()
 
     const list  = request.post().list
 
+    if (sort.length > 0) {
+      this.sortList(sort)
+    }
     //If list is archived, archive all task in that list
     if (archived) {
       await Task.query().where('list_id','=',list.id).update({ archived })
@@ -82,6 +85,13 @@ class ListController {
     response.status(200).json({
       message: 'List deleted'
     })
+  }
+  async sortList(ids) {
+    for (var i = 0; i<ids.length;i++) {
+      let id = ids[i]
+      let sortIndex = i + 1
+      await List.query().where('id','=',id).update({ sort: sortIndex })
+    }
   }
 }
 

@@ -17,7 +17,13 @@ class ProjectController {
       data: projects
     })
   }
+  async show ({request, response}) {
+    const project  = request.post().project
 
+    response.status(200).json({
+      data: project
+    })
+  }
   async store ({ request, response, auth }) {
 
     const { name, description, team_id } = request.post()
